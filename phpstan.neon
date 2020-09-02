@@ -2,6 +2,8 @@ parameters:
     level: 7
     inferPrivatePropertyTypeFromConstructor: true
     ignoreErrors:
+        - '#template type#'
+        - '#generic class#'
 
     paths:
         - src
