@@ -1,5 +1,5 @@
 {
-    "name": "dantleech/php-diagrams",
+    "name": "dantleech/php-diagram",
     "description": "Generate DOT Diagrams from a DSL",
     "license": "MIT",
     "authors": [
@@ -10,7 +10,8 @@
     ],
     "require": {
         "symfony/console": "^5.1",
-        "mathiasverraes/parsica": "^0.5.0"
+        "mathiasverraes/parsica": "^0.5.0",
+        "thecodingmachine/safe": "^1.1"
     },
     "require-dev": {
         "phpstan/phpstan": "^0.12.42",

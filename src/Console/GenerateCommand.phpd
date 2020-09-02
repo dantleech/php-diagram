@@ -1,0 +1,29 @@
+<?php
+
+namespace DTL\PhpDiagram\Console;
+
+use ArrayIterator;
+use Iterator;
+use IteratorAggregate;
+
+class GenerateCommand implements IteratorAggregate
+{
+    private $elements;
+
+    public function __construct(array $elements)
+    {
+        foreach ($elements as $element) {
+            $this->add($element);
+        }
+    }
+
+    private function add($element): void
+    {
+        $this->elements[] = $element;
+    }
+
+    public function getIterator(): Iterator
+    {
+        return new ArrayIterator($this->elements);
+    }
+}

@@ -17,7 +17,7 @@ class DotPrinterTest extends TestCase
     {
         self::assertEquals(
                 implode("\n", $expected),
-                (new DotPrinter())->convert((new MermaidParser())->parse(implode("\n", $lines)))
+                (new DotPrinter())->print((new MermaidParser())->parse(implode("\n", $lines)))
             );
     }
         

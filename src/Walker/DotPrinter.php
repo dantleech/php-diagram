@@ -26,7 +26,7 @@ class DotPrinter
         $this->options = $options;
     }
 
-    public function convert(AstNode $node): string
+    public function print(AstNode $node): string
     {
         if ($node instanceof Graph) {
             return $this->convertGraph($node);
@@ -55,7 +55,7 @@ class DotPrinter
                 array_keys($this->options),
                 array_values($this->options),
             )),
-            implode("\n", array_map(fn (AstNode $node) => $this->convert($node), $node->statements())),
+            implode("\n", array_map(fn (AstNode $node) => $this->print($node), $node->statements())),
             '}']
         ));
     }

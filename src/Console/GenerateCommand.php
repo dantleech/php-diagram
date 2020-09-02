@@ -11,8 +11,10 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Process\Process;
+use function Safe\tmpfile;
 
-class PrintCommand extends Command
+class GenerateCommand extends Command
 {
     private Renderer $renderer;
 
@@ -24,19 +26,25 @@ class PrintCommand extends Command
 
     protected function configure(): void
     {
-        $this->setName('print');
+        $this->setName('generate');
         $this->addArgument('file', InputArgument::REQUIRED, 'Source file');
+        $this->addArgument('out', InputArgument::REQUIRED, 'Out file');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->write(
-            $this->renderer->render(
-                $this->readContents($input->getArgument('file'))
-            ),
-            false,
-            OutputInterface::OUTPUT_RAW
-        );
+        $contents = $this->readContents($input->getArgument('file'));
+        $tmpFile = tempnam(sys_get_temp_dir(), 'phpdiagram');
+        file_put_contents($tmpFile, $this->renderer->render($contents));
+        $process = new Process([
+            'dot',
+            $tmpFile,
+            '-Tpng',
+            '-o',
+            $input->getArgument('out')
+        ]);
+        $process->mustRun();
+
         return 0;
     }
 
