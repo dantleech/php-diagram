@@ -1,0 +1,19 @@
+#!/usr/bin/env php
+<?php 
+use DTL\PhpDiagram\Console\PrintCommand;
+use DTL\PhpDiagram\Parser\MermaidParser;
+use DTL\PhpDiagram\Walker\DotPrinter;
+use Symfony\Component\Console\Application;
+                                                              
+
+require __DIR__ . '/../vendor/autoload.php';
+
+$application = new Application();
+$application->add(
+    new PrintCommand(
+        new MermaidParser(),
+        new DotPrinter()
+    )
+);
+$application->run();
+
