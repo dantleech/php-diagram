@@ -32,3 +32,6 @@ $ diagram generate example/mermaid.mm out.png
 ```
 
 To generate:
+
+![image](https://user-images.githubusercontent.com/530801/92037904-6e3c8e00-ed6a-11ea-8337-2bf2e0132407.png)
+
