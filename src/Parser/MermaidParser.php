@@ -22,6 +22,7 @@ use function Verraes\Parsica\many;
 use function Verraes\Parsica\map;
 use function Verraes\Parsica\printChar;
 use function Verraes\Parsica\punctuationChar;
+use function Verraes\Parsica\space;
 use function Verraes\Parsica\string;
 use function Verraes\Parsica\whitespace;
 use function Verraes\Parsica\zeroOrMore;
@@ -38,9 +39,7 @@ class MermaidParser
 
             many($this->statementParser())->map(function ($v) {
                 return $v;
-            }),
-
-            eol()->or(eof())->optional()
+            })->thenIgnore(eol()->or(eof())),
         )->map(function (array $vars) {
             return new Graph(
                 $vars[0],
@@ -51,7 +50,7 @@ class MermaidParser
 
     private function statementParser(): Parser
     {
-        return $this->leftRightParser();
+        return zeroOrMore(whitespace())->optional()->followedBy($this->leftRightParser());
     }
 
     private function leftRightParser(): Parser
@@ -87,20 +86,19 @@ class MermaidParser
     private function connectionLabel(): Parser
     {
         return between(
-            char('|'), 
-            char('|'), 
+            char('|'),
+            char('|'),
             $this->labelText()
         );
     }
 
     private function labelText(): Parser
     {
-        return atLeastOne(alphaNumChar()->or(whitespace())->or(char('\'')));
+        return atLeastOne(alphaNumChar()->or(whitespace())->or(char('\''))->or(char('?')));
     }
 
     private function nodeName(): Parser
     {
         return atLeastOne(alphaChar());
     }
-
 }

@@ -2,6 +2,6 @@
 
 namespace DTL\PhpDiagram\Ast;
 
-interface Statement
+interface Statement extends AstNode
 {
 }

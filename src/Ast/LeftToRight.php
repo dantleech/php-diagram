@@ -15,4 +15,19 @@ class LeftToRight implements Statement
         $this->right = $right;
         $this->label = $label;
     }
+
+    public function left(): Node
+    {
+        return $this->left;
+    }
+
+    public function right(): Node
+    {
+        return $this->right;
+    }
+
+    public function label(): ?string
+    {
+        return $this->label;
+    }
 }
